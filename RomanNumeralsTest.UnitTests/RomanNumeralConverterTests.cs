@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
@@ -14,6 +15,17 @@ public class RomanNumeralConverterTests
     {
         var romanNumeral = RomanNumeralConverter.ToNumeral(originalRomanNumeral.ToInt());
         romanNumeral.Should().Be(originalRomanNumeral.ToString());
+    }
+
+    [Theory]
+    [InlineData(-1)]
+    [InlineData(0)]
+    [InlineData(2001)]
+    [InlineData(2002)]
+    public void GivenAnInvalidNumber_WhenConversionIsAttempted_ArgumentExceptionIsThrown(int number)
+    {
+        Func<string> runConversion = () => RomanNumeralConverter.ToNumeral(number);
+        runConversion.Should().Throw<ArgumentException>();
     }
     
     [Fact(Skip = "Manual Test")]
